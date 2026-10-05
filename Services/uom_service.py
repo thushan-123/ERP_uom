@@ -47,3 +47,8 @@ def deactivate_uom(request, uom_id: int ):
         uom.active = True
         uom.save(update_fields=["active", "modified_by", "modified_at"])
         return {"message": "UOM activated successfully"}
+
+def get_uom(request ):
+    uom_list = uom_master.objects.all()
+    return uom_list
+
