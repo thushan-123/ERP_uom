@@ -1,8 +1,8 @@
-from ninja import Router, Schema
+from ninja import Router
 
-from Schemas import UOMResponseSchema, UOMCreateSchema, UOMUpdateSchema
-from Schemas.message import MessageSchema
-from Services import create_uom, update_uom, deactivate_uom, get_uom
+from app.Schemas import UOMResponseSchema, UOMCreateSchema, UOMUpdateSchema
+from app.Schemas import MessageSchema
+from app.Services import create_uom, update_uom, deactivate_uom, get_uom
 router = Router(tags=["uom_master"])
 
 @router.post("" , response={201: UOMResponseSchema, 409: MessageSchema})

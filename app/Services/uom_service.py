@@ -1,9 +1,8 @@
 from django.db import transaction, IntegrityError
-from ninja import Router, Schema
 from ninja.errors import HttpError
 
-from Models import uom_master
-from Schemas import UOMCreateSchema, UOMUpdateSchema
+from app.Models import uom_master
+from app.Schemas import UOMCreateSchema, UOMUpdateSchema
 
 
 def create_uom(request, payload: UOMCreateSchema):
