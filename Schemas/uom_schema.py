@@ -23,3 +23,11 @@ class UOMCreateSchema(Schema):
     @classmethod
     def upper_case(cls,v:str) ->str:
         return v.upper()
+
+class UOMUpdateSchema(Schema):
+    uom_name: Optional[str] = Field(default=None, max_length=100)
+    uom_category: Optional[str] = Field(default=None, max_length=30)
+    decimal_places: Optional[int] = Field(default=None, ge=0, le=10)
+    description: Optional[str] = Field(default=None, max_length=250)
+    active: Optional[bool] = None
+
