@@ -31,3 +31,15 @@ class UOMUpdateSchema(Schema):
     description: Optional[str] = Field(default=None, max_length=250)
     active: Optional[bool] = None
 
+class UOMResponseSchema(Schema):
+    uom_id: int
+    uom_code: str
+    uom_name: str
+    uom_category: str
+    decimal_places: int
+    description: Optional[str]
+    active: bool
+    created_by_id: int
+    created_at: datetime
+    modified_by_id: int
+    modified_at: datetime
