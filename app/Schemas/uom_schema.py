@@ -45,6 +45,11 @@ class UOMResponseSchema(Schema):
     modified_at: datetime
 
 class UOMResponse(Schema):
-    status: str
+    success: bool
     message: str
-    data: Optional[Any] = None
+    data: UOMResponseSchema
+
+class UOMResponseList(Schema):
+    success: bool
+    message: str
+    data: list[UOMResponseSchema]

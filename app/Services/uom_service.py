@@ -1,6 +1,6 @@
 from django.db import transaction, IntegrityError
 from ninja.errors import HttpError
-
+from rest_framework import status
 from app.Models import uom_master
 from app.Schemas import UOMCreateSchema, UOMUpdateSchema
 from django.shortcuts import get_object_or_404
@@ -15,7 +15,11 @@ def create_uom(request, payload: UOMCreateSchema):
     except IntegrityError:
         raise HttpError(400, "Already Exists")
 
-    return 201, uom
+    return 201, {
+        "success": True,
+        "message": "UOM created successfully",
+        "data": uom,
+    }
 
 def update_uom(request, uom_id: int , payload: UOMUpdateSchema):
     uom = uom_master.objects.get(uom_id=uom_id)
@@ -35,7 +39,11 @@ def update_uom(request, uom_id: int , payload: UOMUpdateSchema):
     except IntegrityError:
         raise HttpError(400, "Update error")
 
-    return uom
+    return 200 , {
+        "success": True,
+        "message": "UOM updated successfully",
+        "data": uom,
+    }
     # if uom is None:
     #     raise HttpError(404, "Not Found")
     # data = payload.model_dump(exclude_unset=True)
@@ -64,8 +72,16 @@ def deactivate_uom(request, uom_id: int):
         ]
     )
 
-    return uom
+    return 200, {
+        "success": True,
+        "message": "UOM deactivated successfully",
+        "data": uom,
+    }
 def get_uom(request ):
     uom_list = uom_master.objects.all()
-    return uom_list
+    return 200, {
+        "success": True,
+        "message": "UOM list",
+        "data": uom_list,
+    }
 
