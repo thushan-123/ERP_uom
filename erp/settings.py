@@ -89,8 +89,8 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "uom_db",
-        "USER": "uom_user",
-        "PASSWORD": "change-this-password",
+        "USER": "thush",
+        "PASSWORD": "123456",
         "HOST": "127.0.0.1",
         "PORT": "5432",
     }

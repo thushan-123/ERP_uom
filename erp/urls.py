@@ -15,11 +15,25 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+# from django.urls import path
+#
+# import app.views
+#
+# urlpatterns = [
+#     # path('admin/', admin.site.urls),
+#     path('uom/' , app.views.router)
+# ]
 
-import app.views
+from django.contrib import admin
+from django.urls import path
+from ninja import NinjaAPI
+
+from app.views import router as uom_router
+
+api = NinjaAPI()
+
+api.add_router("uom", uom_router)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('/uom' , app.views.router)
+    path("api/", api.urls),
 ]
