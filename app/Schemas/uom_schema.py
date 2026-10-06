@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional
+from typing import Optional, Any
 from ninja import Schema
 from pydantic import Field, field_validator
 
@@ -43,3 +43,8 @@ class UOMResponseSchema(Schema):
     created_at: datetime
     modified_by_id: int
     modified_at: datetime
+
+class UOMResponse(Schema):
+    status: str
+    message: str
+    data: Optional[Any] = None

@@ -16,6 +16,7 @@ def create(request, payload: UOMCreateSchema):
 
 @router.get("" , response=list[UOMResponseSchema])
 def get(request):
+
     return get_uom(request)
 
 @router.put("/{uom_id}" , response=UOMResponseSchema)
