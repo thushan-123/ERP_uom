@@ -29,10 +29,15 @@ from django.urls import path
 from ninja import NinjaAPI
 
 from app.views import router as uom_router
+from app.views import auth_router
 
-api = NinjaAPI()
+api = NinjaAPI(
+    title="UOM Management API",
+    version="1.0.0",
+)
 
-api.add_router("uom", uom_router)
+api.add_router("/uom", uom_router)
+api.add_router("/auth", auth_router)
 
 urlpatterns = [
     path("api/", api.urls),

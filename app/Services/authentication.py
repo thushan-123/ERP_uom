@@ -1,11 +1,11 @@
 from django.contrib.auth import authenticate
+from ninja.errors import HttpError
 from rest_framework.authtoken.models import Token
 from ninja.security import HttpBearer
 
-from app.Schemas import LoginSchema
-
 
 class BearerTokenAuth(HttpBearer):
+
     def authenticate(self, request, token):
         try:
             token_obj = Token.objects.select_related("user").get(
@@ -19,10 +19,23 @@ class BearerTokenAuth(HttpBearer):
 
         return token_obj.user
 
-def login_user(request, payload: LoginSchema):
-    user = authenticate(request,username=payload.username, password=payload.password)
-    token , _ = Token.objects.get_or_create(user=user)
+
+def login_user(request, payload):
+    user = authenticate(
+        request=request,
+        username=payload.username,
+        password=payload.password,
+    )
+
+    if user is None:
+        raise HttpError(401, "Invalid username or password")
+
+    if not user.is_active:
+        raise HttpError(403, "User account is inactive")
+
+    token, _ = Token.objects.get_or_create(user=user)
+
     return {
-        "token": token.key,
+        "access_token": token.key,
         "token_type": "Bearer",
     }

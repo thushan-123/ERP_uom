@@ -4,8 +4,8 @@ from ninja import NinjaAPI, Router
 from app.Services import login_user
 from app.Schemas import TokenResponseSchema, LoginSchema
 
-router = Router(tags=["authentication"])
+auth_router = Router(tags=["authentication"])
 
-@router.post("/login", auth=None, response=TokenResponseSchema)
+@auth_router.post("/login", auth=None, response=TokenResponseSchema)
 def login(request, payload: LoginSchema):
     return login_user(request, payload)

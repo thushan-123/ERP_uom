@@ -7,4 +7,4 @@ class LoginSchema(Schema):
 
 class TokenResponseSchema(Schema):
     access_token :str
-    token_type:str = "bearer"
+    token_type:str
