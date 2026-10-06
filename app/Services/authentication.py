@@ -1,5 +1,8 @@
+from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from ninja.security import HttpBearer
+
+from app.Schemas import LoginSchema
 
 
 class BearerTokenAuth(HttpBearer):
@@ -15,3 +18,11 @@ class BearerTokenAuth(HttpBearer):
             return None
 
         return token_obj.user
+
+def login_user(request, payload: LoginSchema):
+    user = authenticate(request,username=payload.username, password=payload.password)
+    token , _ = Token.objects.get_or_create(user=user)
+    return {
+        "token": token.key,
+        "token_type": "Bearer",
+    }

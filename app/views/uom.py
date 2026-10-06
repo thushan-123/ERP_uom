@@ -5,7 +5,7 @@ from app.Schemas import MessageSchema
 from app.Services import create_uom, update_uom, deactivate_uom, get_uom
 router = Router(tags=["uom_master"])
 
-@router.get("/")
+@router.get("/test")
 def get_uom(request):
     return {"message": "UOM API working"}
 
