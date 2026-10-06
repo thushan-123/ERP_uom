@@ -9,10 +9,29 @@ class uom_master(models.Model):
     decimal_places = models.PositiveIntegerField(default=0)
     description = models.CharField( max_length=250, blank=True, null=True)
     active = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name='uom_created')
-    modified_at = models.DateTimeField(auto_now=True)
-    modified_by = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.PROTECT,
+        related_name="uom_created"
+    )
+
+    modified_at = models.DateTimeField(
+        auto_now=True
+    )
+
+    modified_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.PROTECT,
+        related_name="uom_modified"
+    )
+    # created_at = models.DateTimeField(auto_now_add=True)
+    # created_by_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name='uom_created')
+    # modified_at = models.DateTimeField(auto_now=True)
+    # modified_by_id = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = 'ref_item_uom_master'

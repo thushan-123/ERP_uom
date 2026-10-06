@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
 
-    'app'
+    'app',
 ]
 
 MIDDLEWARE = [
@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'erp.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "uom_db",
+        "NAME": "uom",
         "USER": "thush",
         "PASSWORD": "123456",
         "HOST": "127.0.0.1",
