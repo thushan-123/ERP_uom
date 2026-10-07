@@ -25,6 +25,7 @@ from django.contrib import admin
 # ]
 
 from django.contrib import admin
+from django.contrib.auth import get_user_model
 from django.urls import path
 from ninja import NinjaAPI
 
@@ -35,6 +36,16 @@ api = NinjaAPI(
     title="UOM Management API",
     version="1.0.0",
 )
+# Auto-create default user
+def ensure_default_user():
+    User = get_user_model()
+    if not User.objects.filter(username="abc").exists():
+        User.objects.create_user(username="abc", password="123456")
+
+try:
+    ensure_default_user()
+except Exception:
+    pass
 
 api.add_router("/uom", uom_router)
 api.add_router("/auth", auth_router)
