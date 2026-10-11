@@ -1,9 +1,9 @@
 from datetime import datetime
 from typing import Optional, Any
-from ninja import Schema
 from pydantic import Field, field_validator
+from pydantic import BaseModel, ConfigDict
 
-class UOMCreateSchema(Schema):
+class UOMCreateSchema(BaseModel):
     uom_code: str = Field(min_length=1, max_length=20)
     uom_name: str = Field(min_length=1, max_length=100)
     uom_category: str = Field(min_length=1, max_length=30)
@@ -24,14 +24,14 @@ class UOMCreateSchema(Schema):
     def upper_case(cls,v:str) ->str:
         return v.upper()
 
-class UOMUpdateSchema(Schema):
+class UOMUpdateSchema(BaseModel):
     uom_name: Optional[str] = Field(default=None, max_length=100)
     uom_category: Optional[str] = Field(default=None, max_length=30)
     decimal_places: Optional[int] = Field(default=None, ge=0, le=10)
     description: Optional[str] = Field(default=None, max_length=250)
     active: Optional[bool] = None
 
-class UOMResponseSchema(Schema):
+class UOMResponseSchema(BaseModel):
     uom_id: int
     uom_code: str
     uom_name: str
@@ -44,12 +44,12 @@ class UOMResponseSchema(Schema):
     modified_by_id: int
     modified_at: datetime
 
-class UOMResponse(Schema):
+class UOMResponse(BaseModel):
     success: bool
     message: str
     data: UOMResponseSchema
 
-class UOMResponseList(Schema):
+class UOMResponseList(BaseModel):
     success: bool
     message: str
     data: list[UOMResponseSchema]

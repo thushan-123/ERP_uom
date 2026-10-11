@@ -2,7 +2,7 @@ from django.db import transaction, IntegrityError
 from ninja.errors import HttpError
 from rest_framework import status
 from app.Models import uom_master
-from app.Schemas import UOMCreateSchema, UOMUpdateSchema
+from app.schemas import UOMCreateSchema, UOMUpdateSchema
 from django.shortcuts import get_object_or_404
 
 def create_uom(request, payload: UOMCreateSchema):

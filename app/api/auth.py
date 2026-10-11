@@ -1,8 +1,8 @@
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from ninja import NinjaAPI, Router
-from app.Services import login_user
-from app.Schemas import TokenResponseSchema, LoginSchema
+from app.service import login_user
+from app.schemas import TokenResponseSchema, LoginSchema
 
 auth_router = Router(tags=["authentication"])
 

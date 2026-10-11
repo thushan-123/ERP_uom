@@ -1,8 +1,8 @@
 from ninja import Router
 
-from app.Schemas import UOMResponseSchema, UOMCreateSchema, UOMUpdateSchema, UOMResponse, UOMResponseList
-from app.Schemas import MessageSchema
-from app.Services import create_uom, update_uom, deactivate_uom, get_uom, BearerTokenAuth
+from app.schemas import UOMResponseSchema, UOMCreateSchema, UOMUpdateSchema, UOMResponse, UOMResponseList
+from app.schemas import MessageSchema
+from app.service import create_uom, update_uom, deactivate_uom, get_uom, BearerTokenAuth
 
 router = Router(auth=BearerTokenAuth() ,tags=["uom_master"])
 

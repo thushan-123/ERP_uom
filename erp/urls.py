@@ -1,14 +1,14 @@
 """
 URL configuration for erp project.
 
-The `urlpatterns` list routes URLs to views. For more information please see:
+The `urlpatterns` list routes URLs to api. For more information please see:
     https://docs.djangoproject.com/en/6.1/topics/http/urls/
 Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
+Function api
+    1. Add an import:  from my_app import api
+    2. Add a URL to urlpatterns:  path('', api.home, name='home')
+Class-based api
+    1. Add an import:  from other_app.api import Home
     2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
 Including another URLconf
     1. Import the include() function: from django.urls import include, path
@@ -17,11 +17,11 @@ Including another URLconf
 from django.contrib import admin
 # from django.urls import path
 #
-# import app.views
+# import app.api
 #
 # urlpatterns = [
 #     # path('admin/', admin.site.urls),
-#     path('uom/' , app.views.router)
+#     path('uom/' , app.api.router)
 # ]
 
 from django.contrib import admin
@@ -29,8 +29,8 @@ from django.contrib.auth import get_user_model
 from django.urls import path
 from ninja import NinjaAPI
 
-from app.views import router as uom_router
-from app.views import auth_router
+from app.api import router as uom_router
+from app.api import auth_router
 
 api = NinjaAPI(
     title="UOM Management API",
