@@ -1,28 +1,28 @@
 from django.db import transaction, IntegrityError
 from ninja.errors import HttpError
 from rest_framework import status
-from app.Models import uom_master
-from app.schemas import UOMCreateSchema, UOMUpdateSchema
+from app.models import UOMMaster
+from app.schemas import UOMMasterCreate, UOMMasterUpdate
 from django.shortcuts import get_object_or_404
 
-def create_uom(request, payload: UOMCreateSchema):
+def UOMMasterCreateService(request, payload: UOMMasterCreate):
     data = payload.model_dump()
 
     try:
         with transaction.atomic():
-            uom = uom_master.objects.create(**data, created_by=request.auth, modified_by=request.auth,)
-
+            uom = UOMMaster.objects.create(**data, created_by=request.auth, modified_by=request.auth,)
+        return 201, {
+            "success": True,
+            "message": "UOM created successfully",
+            "data": uom,
+        }
     except IntegrityError:
         raise HttpError(400, "Already Exists")
 
-    return 201, {
-        "success": True,
-        "message": "UOM created successfully",
-        "data": uom,
-    }
 
-def update_uom(request, uom_id: int , payload: UOMUpdateSchema):
-    uom = uom_master.objects.get(uom_id=uom_id)
+
+def UOMMasterUpdateService(request, uom_id: int , payload: UOMMasterUpdate):
+    uom = UOMMaster.objects.get(uom_id=uom_id)
     if uom is None:
         raise HttpError(404, "UOM not found")
 
@@ -36,30 +36,18 @@ def update_uom(request, uom_id: int , payload: UOMUpdateSchema):
     try:
         with transaction.atomic():
             uom.save()
+            return 200, {
+                "success": True,
+                "message": "UOM updated successfully",
+                "data": uom,
+            }
     except IntegrityError:
         raise HttpError(400, "Update error")
 
-    return 200 , {
-        "success": True,
-        "message": "UOM updated successfully",
-        "data": uom,
-    }
-    # if uom is None:
-    #     raise HttpError(404, "Not Found")
-    # data = payload.model_dump(exclude_unset=True)
-    #
-    # for field , value in data.items():
-    #     setattr(uom, field, value)
-    # uom.modified_by = request.auth
-    # try:
-    #     with transaction.atomic():
-    #         uom.update()
-    # except IntegrityError:
-    #     raise HttpError(400, "Update error")
-    # return uom
 
-def deactivate_uom(request, uom_id: int):
-    uom = get_object_or_404(uom_master, uom_id=uom_id)
+
+def UOMMasterDiactivateService(request, uom_id: int):
+    uom = get_object_or_404(UOMMaster, uom_id=uom_id)
 
     uom.active = not uom.active
     uom.modified_by = request.auth
@@ -77,8 +65,9 @@ def deactivate_uom(request, uom_id: int):
         "message": "UOM deactivated successfully",
         "data": uom,
     }
-def get_uom(request ):
-    uom_list = uom_master.objects.all()
+
+def UOMMasterGetAllService(request ):
+    uom_list = UOMMaster.objects.all()
     return 200, {
         "success": True,
         "message": "UOM list",

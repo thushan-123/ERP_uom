@@ -1,7 +1,8 @@
 from django.db import models
 from django.conf import settings
 
-class uom_master(models.Model):
+
+class UOMMaster(models.Model):
     uom_id = models.BigAutoField(primary_key=True)
     uom_code = models.CharField(max_length=20, unique=True)
     uom_name = models.CharField(max_length=100)
