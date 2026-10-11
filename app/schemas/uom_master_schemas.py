@@ -3,7 +3,8 @@ from typing import Optional, Any
 from pydantic import Field, field_validator
 from pydantic import BaseModel, ConfigDict
 
-class UOMCreateSchema(BaseModel):
+class UOMMasterCreate(BaseModel):
+    model_config = ConfigDict(title="UOM - Master Create")
     uom_code: str = Field(min_length=1, max_length=20)
     uom_name: str = Field(min_length=1, max_length=100)
     uom_category: str = Field(min_length=1, max_length=30)
@@ -16,7 +17,7 @@ class UOMCreateSchema(BaseModel):
     def strip_txt (cls,v:str) ->str:
         strip_value = v.strip()
         if not strip_value:
-            raise ValueError("this field is required")
+            raise ValueError("Tis Field Is Required")
         return v
 
     @field_validator("uom_code")
@@ -24,14 +25,18 @@ class UOMCreateSchema(BaseModel):
     def upper_case(cls,v:str) ->str:
         return v.upper()
 
-class UOMUpdateSchema(BaseModel):
+class UOMMasterUpdate(BaseModel):
+    model_config = ConfigDict(title="UOM - Master Update")
+
     uom_name: Optional[str] = Field(default=None, max_length=100)
     uom_category: Optional[str] = Field(default=None, max_length=30)
     decimal_places: Optional[int] = Field(default=None, ge=0, le=10)
     description: Optional[str] = Field(default=None, max_length=250)
     active: Optional[bool] = None
 
-class UOMResponseSchema(BaseModel):
+class UOMStructure(BaseModel):
+    model_config = ConfigDict(title="UOM - Master Response")
+
     uom_id: int
     uom_code: str
     uom_name: str
@@ -45,11 +50,14 @@ class UOMResponseSchema(BaseModel):
     modified_at: datetime
 
 class UOMResponse(BaseModel):
-    success: bool
-    message: str
-    data: UOMResponseSchema
+    model_config = ConfigDict(title="UOM - Response Default Structure")
 
-class UOMResponseList(BaseModel):
     success: bool
     message: str
-    data: list[UOMResponseSchema]
+    data: UOMStructure
+class UOMResponseList(BaseModel):
+    model_config = ConfigDict(title="UOM - Response List Default Structure")
+
+    success: bool
+    message: str
+    data: list[UOMStructure]
