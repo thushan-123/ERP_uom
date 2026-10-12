@@ -14,7 +14,7 @@ def test_uom(request):
 def create(request, payload: UOMMasterCreate):
     return UOMMasterCreateService(request, payload)
 
-@router.get("" , response={200: UOMResponseList})
+@router.get("", response={200: UOMResponseList})
 def get(request):
     return UOMMasterGetAllService(request)
 

@@ -35,7 +35,10 @@ class UOMMasterUpdate(BaseModel):
     active: Optional[bool] = None
 
 class UOMStructure(BaseModel):
-    model_config = ConfigDict(title="UOM - Master Response")
+    model_config = ConfigDict(
+        title="UOM - Master Response",
+        from_attributes=True,
+    )
 
     uom_id: int
     uom_code: str
@@ -49,14 +52,21 @@ class UOMStructure(BaseModel):
     modified_by_id: int
     modified_at: datetime
 
+
 class UOMResponse(BaseModel):
-    model_config = ConfigDict(title="UOM - Response Default Structure")
+    model_config = ConfigDict(
+        title="UOM - Response Default Structure"
+    )
 
     success: bool
     message: str
     data: UOMStructure
+
+
 class UOMResponseList(BaseModel):
-    model_config = ConfigDict(title="UOM - Response List Default Structure")
+    model_config = ConfigDict(
+        title="UOM - Response List Default Structure"
+    )
 
     success: bool
     message: str

@@ -14,15 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-# from django.urls import path
-#
-# import app.api
-#
-# urlpatterns = [
-#     # path('admin/', admin.site.urls),
-#     path('uom/' , app.api.router)
-# ]
+
 
 from django.contrib import admin
 from django.contrib.auth import get_user_model

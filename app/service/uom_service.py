@@ -66,11 +66,12 @@ def UOMMasterDiactivateService(request, uom_id: int):
         "data": uom,
     }
 
-def UOMMasterGetAllService(request ):
+def UOMMasterGetAllService(request):
     uom_list = UOMMaster.objects.all()
+
     return 200, {
         "success": True,
-        "message": "UOM list",
+        "message": "UOM list retrieved successfully",
         "data": uom_list,
     }
 
