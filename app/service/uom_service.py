@@ -10,7 +10,7 @@ def UOMMasterCreateService(request, payload: UOMMasterCreate):
 
     try:
         with transaction.atomic():
-            uom = UOMMaster.objects.create(**data, created_by=request.auth, modified_by=request.auth,)
+            uom = UOMMaster.objects.create(**data ,created_by=request.auth, modified_by=request.auth,)  # created_by=request.auth, modified_by=request.auth,
         return 201, {
             "success": True,
             "message": "UOM created successfully",

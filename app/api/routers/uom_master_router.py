@@ -6,6 +6,7 @@ from app.service import UOMMasterCreateService, UOMMasterDiactivateService,UOMMa
 
 router = Router(auth=BearerTokenAuth() ,tags=["uom_master"])
 
+
 @router.get("/test")
 def test_uom(request):
     return {"message": "UOM API working"}
