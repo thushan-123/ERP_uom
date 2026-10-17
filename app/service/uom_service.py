@@ -67,7 +67,7 @@ def UOMMasterDiactivateService(request, uom_id: int):
     }
 
 def UOMMasterGetAllService(request):
-    uom_list = UOMMaster.objects.all()
+    uom_list = UOMMaster.objects.all().order_by("uom_id")
 
     return 200, {
         "success": True,
@@ -75,3 +75,13 @@ def UOMMasterGetAllService(request):
         "data": uom_list,
     }
 
+def UOMMasterDeleteService(request, uom_id: int):
+    data = UOMMaster.objects.filter(uom_id=uom_id)
+    if data is None:
+        raise HttpError(404, "UOM not found")
+    else:
+        data.delete()
+    return 200, {
+        "success": True,
+        "message": "UOM deleted successfully",
+    }
