@@ -8,7 +8,7 @@ class UOMMasterCreate(BaseModel):
     uom_code: str = Field(min_length=1, max_length=20)
     uom_name: str = Field(min_length=1, max_length=100)
     uom_category: str = Field(min_length=1, max_length=30)
-    decimal_places: int = Field(default=0,ge=0,le=10)
+    decimal_places: int = Field(default=0,ge=0,le=1000)
     description: Optional[str] = Field(default=None,max_length=250)
     active: bool = True
 
