@@ -2,7 +2,7 @@ from ninja import Router
 
 from app.schemas import UOMMasterCreate, UOMMasterUpdate,UOMResponse,UOMResponseList
 from app.schemas import MessageSchema
-from app.service import UOMMasterCreateService, UOMMasterDiactivateService,UOMMasterUpdateService,UOMMasterGetAllService, BearerTokenAuth
+from app.service import UOMMasterCreateService, UOMMasterDiactivateService,UOMMasterUpdateService,UOMMasterGetAllService, BearerTokenAuth, UOMMasterDeleteService
 
 router = Router(auth=BearerTokenAuth() ,tags=["uom_master"])
 
@@ -26,3 +26,7 @@ def update(request,uom_id:int , payload: UOMMasterUpdate):
 @router.patch("/{uom_id}", response={200: UOMResponse, 409: MessageSchema})
 def patch(request, uom_id: int):
     return UOMMasterDiactivateService(request, uom_id)
+
+@router.delete("/{uom_id}", response={200: MessageSchema})
+def delete(request, uom_id: int):
+    return UOMMasterDeleteService(request, uom_id)
