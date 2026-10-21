@@ -22,6 +22,9 @@ def get(request):
 @router.put("/{uom_id}" , response={200: UOMResponse, 409: MessageSchema})
 def update(request,uom_id:int , payload: UOMMasterUpdate):
     return UOMMasterUpdateService(request,uom_id,payload)
+@router.patch("/{uom_id}", response={200: UOMResponse, 409: MessageSchema})
+def update(request, uom_id: int, payload: UOMMasterUpdate):
+    return UOMMasterUpdateService(request, uom_id, payload)
 
 @router.patch("/{uom_id}", response={200: UOMResponse, 409: MessageSchema})
 def patch(request, uom_id: int):

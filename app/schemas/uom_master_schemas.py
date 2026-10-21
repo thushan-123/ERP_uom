@@ -29,7 +29,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 #     def upper_case(cls,v:str) ->str:
 #         return v.upper()
 
-class UOMMaster(models.Model):
+class UOMMasterCreate(models.Model):
     uom_id = models.AutoField(primary_key=True)
 
     uom_code = models.CharField(

@@ -4,7 +4,7 @@ from ninja import Schema
 class MessageSchema(Schema):
     message: str
 
-class UOMErrorMessageSchema(Schema):
+class UOMErrorMessageSchema(Exception):
     status: str
     code: str
     message: str

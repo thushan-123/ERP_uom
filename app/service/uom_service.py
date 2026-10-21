@@ -2,7 +2,7 @@ from django.db import transaction, IntegrityError
 from ninja.errors import HttpError
 from rest_framework import status
 from app.models import UOMMaster
-from app.schemas import UOMMasterCreate, UOMMasterUpdate
+from app.schemas import UOMMasterCreate, UOMMasterUpdate, UOMErrorMessageSchema
 from django.shortcuts import get_object_or_404
 
 def UOMMasterCreateService(request, payload: UOMMasterCreate):
@@ -17,9 +17,8 @@ def UOMMasterCreateService(request, payload: UOMMasterCreate):
             "data": uom,
         }
     except IntegrityError:
-        raise HttpError(400, "UOM - Already Exists")
-
-
+        # raise HttpError(400, "UOM - Already Exists")
+        raise UOMErrorMessageSchema("error",404,"Intergrity Error", "Uom Creation Error")
 
 def UOMMasterUpdateService(request, uom_id: int , payload: UOMMasterUpdate):
     try:
@@ -42,7 +41,8 @@ def UOMMasterUpdateService(request, uom_id: int , payload: UOMMasterUpdate):
                 "data": uom,
             }
     except Exception as e:
-        raise HttpError(400, "UOM Master Update Error")
+        # raise HttpError(400, "UOM Master Update Error")
+        raise UOMErrorMessageSchema("error", 404, "Update Error", "Uom Creation Error")
 
 
 
@@ -67,7 +67,8 @@ def UOMMasterDiactivateService(request, uom_id: int):
             "data": uom,
         }
     except Exception as e:
-        raise HttpError(400, "UOM Master Deactivate Error")
+        # raise HttpError(400, "UOM Master Deactivate Error")
+        raise UOMErrorMessageSchema("error", 404, "Deactivate Error", "Uom Creation Error")
 
 
 def UOMMasterGetAllService(request):
@@ -80,7 +81,8 @@ def UOMMasterGetAllService(request):
             "data": uom_list,
         }
     except Exception as e:
-        raise HttpError(400, "UOM Master List Error")
+        # raise HttpError(400, "UOM Master List Error")
+        raise UOMErrorMessageSchema("error", 404, "List Error", "Uom Master List Error")
 
 def UOMMasterDeleteService(request, uom_id: int):
     try:
@@ -94,4 +96,5 @@ def UOMMasterDeleteService(request, uom_id: int):
             "message": "UOM deleted successfully",
         }
     except Exception as e:
-        raise HttpError(400, "UOM Master Delete Service Error")
+        # raise HttpError(400, "UOM Master Delete Service Error")
+        raise UOMErrorMessageSchema("error", 404, "Delete Error", "Delete Error - UOMMasterDeleteService error")
