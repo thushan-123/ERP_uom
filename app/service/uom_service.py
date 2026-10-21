@@ -17,23 +17,23 @@ def UOMMasterCreateService(request, payload: UOMMasterCreate):
             "data": uom,
         }
     except IntegrityError:
-        raise HttpError(400, "Already Exists")
+        raise HttpError(400, "UOM - Already Exists")
 
 
 
 def UOMMasterUpdateService(request, uom_id: int , payload: UOMMasterUpdate):
-    uom = UOMMaster.objects.get(uom_id=uom_id)
-    if uom is None:
-        raise HttpError(404, "UOM not found")
-
-    data = payload.model_dump(exclude_unset=True)
-
-    for field, value in data.items():
-        setattr(uom, field, value)
-
-    uom.modified_by = request.auth
-
     try:
+        uom = UOMMaster.objects.filter(uom_id=uom_id).first()
+        if uom is None:
+            raise HttpError(404, "UOM not found")
+
+        data = payload.model_dump(exclude_unset=True)
+
+        for field, value in data.items():
+            setattr(uom, field, value)
+
+        uom.modified_by = request.auth
+
         with transaction.atomic():
             uom.save()
             return 200, {
