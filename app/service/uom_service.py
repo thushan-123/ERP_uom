@@ -16,7 +16,7 @@ def UOMMasterCreateService(request, payload: UOMMasterCreate):
             "message": "UOM created successfully",
             "data": uom,
         }
-    except IntegrityError:
+    except Exception as e:
         # raise HttpError(400, "UOM - Already Exists")
         raise UOMErrorMessageSchema("error",404,"Intergrity Error", "Uom Creation Error")
 

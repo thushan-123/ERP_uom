@@ -5,23 +5,19 @@ class MessageSchema(Schema):
     message: str
 
 class UOMErrorMessageSchema(Exception):
-    status: str
-    code: str
-    message: str
-    details: str
-
-    def __init__(self,status,code,message,details):
+    def __init__(self, status: str, code: int, message: str, details: str):
         self.status = status
         self.code = code
         self.message = message
         self.details = details
+        super().__init__(message)
 
     def send(self):
         return {
             "status": self.status,
             "code": self.code,
             "message": self.message,
-            "details": self.details
+            "details": self.details,
         }
 
 

@@ -18,16 +18,25 @@ Including another URLconf
 
 from django.contrib import admin
 from django.contrib.auth import get_user_model
+from django.http import JsonResponse
 from django.urls import path
 from ninja import NinjaAPI
 
 from app.api import router as uom_router
 from app.api import auth_router
+from app.schemas import UOMErrorMessageSchema
 
 api = NinjaAPI(
     title="UOM Management API",
     version="1.0.0",
 )
+@api.exception_handler(UOMErrorMessageSchema)
+def uom_error_handler(request, exc: UOMErrorMessageSchema):
+    return JsonResponse(
+        exc.send(),
+        status=exc.code,
+    )
+
 # Auto-create default user
 def ensure_default_user():
     User = get_user_model()
