@@ -41,47 +41,57 @@ def UOMMasterUpdateService(request, uom_id: int , payload: UOMMasterUpdate):
                 "message": "UOM updated successfully",
                 "data": uom,
             }
-    except IntegrityError:
-        raise HttpError(400, "Update error")
+    except Exception as e:
+        raise HttpError(400, "UOM Master Update Error")
 
 
 
 def UOMMasterDiactivateService(request, uom_id: int):
-    uom = get_object_or_404(UOMMaster, uom_id=uom_id)
+    try:
+        uom = get_object_or_404(UOMMaster, uom_id=uom_id)
 
-    uom.active = not uom.active
-    uom.modified_by = request.auth
+        uom.active = not uom.active
+        uom.modified_by = request.auth
 
-    uom.save(
-        update_fields=[
-            "active",
-            "modified_by",
-            "modified_at",
-        ]
-    )
+        uom.save(
+            update_fields=[
+                "active",
+                "modified_by",
+                "modified_at",
+            ]
+        )
 
-    return 200, {
-        "success": True,
-        "message": "UOM deactivated successfully",
-        "data": uom,
-    }
+        return 200, {
+            "success": True,
+            "message": "UOM deactivated successfully",
+            "data": uom,
+        }
+    except Exception as e:
+        raise HttpError(400, "UOM Master Deactivate Error")
+
 
 def UOMMasterGetAllService(request):
-    uom_list = UOMMaster.objects.all().order_by("uom_id")
+    try:
+        uom_list = UOMMaster.objects.all().order_by("uom_id")
 
-    return 200, {
-        "success": True,
-        "message": "UOM list retrieved successfully",
-        "data": uom_list,
-    }
+        return 200, {
+            "success": True,
+            "message": "UOM list retrieved successfully",
+            "data": uom_list,
+        }
+    except Exception as e:
+        raise HttpError(400, "UOM Master List Error")
 
 def UOMMasterDeleteService(request, uom_id: int):
-    data = UOMMaster.objects.filter(uom_id=uom_id)
-    if data is None:
-        raise HttpError(404, "UOM not found")
-    else:
-        data.delete()
-    return 200, {
-        "success": True,
-        "message": "UOM deleted successfully",
-    }
+    try:
+        data = UOMMaster.objects.filter(uom_id=uom_id)
+        if data is None:
+            raise HttpError(404, "UOM Is Not Found")
+        else:
+            data.delete()
+        return 200, {
+            "success": True,
+            "message": "UOM deleted successfully",
+        }
+    except Exception as e:
+        raise HttpError(400, "UOM Master Delete Service Error")
