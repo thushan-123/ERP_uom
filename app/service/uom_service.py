@@ -15,8 +15,12 @@ def UOMMasterCreateService(request, payload: UOMMasterCreate):
             "message": "UOM created successfully",
             "data": uom,
         }
+    except IntegrityError as i:
+        print("[-] Error : " + i)
+        raise HttpError(409, "UOM already exists or violates a database constraint")
     except Exception as e:
-        raise UOMErrorMessageSchema("error",404,"Intergrity Error", "Uom Creation Error")
+        print("[-] Error : " + e)
+        raise UOMErrorMessageSchema("error",500,"Internal Server Error", "Uom Creation Error")
 
 def UOMMasterUpdateService(request, uom_id: int , payload: UOMMasterUpdate):
     try:
@@ -40,7 +44,7 @@ def UOMMasterUpdateService(request, uom_id: int , payload: UOMMasterUpdate):
             }
     except Exception as e:
         # raise HttpError(400, "UOM Master Update Error")
-        raise UOMErrorMessageSchema("error", 404, "Update Error", "Uom Creation Error")
+        raise UOMErrorMessageSchema("error", 500, "Unexpected Error", "Uom master update")
 
 
 
@@ -71,7 +75,8 @@ def UOMMasterDiactivateService(request, uom_id: int):
         }
     except Exception as e:
         # raise HttpError(400, "UOM Master Deactivate Error")
-        raise UOMErrorMessageSchema("error", 404, "Deactivate Error", "Userr not found")
+        print("[-] Error : " + e)
+        raise UOMErrorMessageSchema("error", 500, "Unexpected Error", "Userr deactivation")
 
 
 def UOMMasterGetAllService(request):
@@ -85,7 +90,8 @@ def UOMMasterGetAllService(request):
         }
     except Exception as e:
         # raise HttpError(400, "UOM Master List Error")
-        raise UOMErrorMessageSchema("error", 404, "List Error", "Uom Master List Error")
+        print("[-] Error : " + e)
+        raise UOMErrorMessageSchema("error", 500, "Unexpected Error", "Uom Master fetch all service")
 
 def UOMMasterDeleteService(request, uom_id: int):
     try:
@@ -100,4 +106,7 @@ def UOMMasterDeleteService(request, uom_id: int):
         }
     except Exception as e:
         # raise HttpError(400, "UOM Master Delete Service Error")
-        raise UOMErrorMessageSchema("error", 404, "Delete Error", "Delete Error - UOMMasterDeleteService error")  
+        print("[-] Error : " + e)
+        raise UOMErrorMessageSchema("error", 500, "Unexpected Error", "Delete Error - UOMMasterDeleteService error")  
+
+    
